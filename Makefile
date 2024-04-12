@@ -21,7 +21,7 @@ FFLAG = $(OFLAG) $(WFLAG)
 LFLAG = $(OFLAG)
 
 # ARPACK LIBRARY
-ARPACK=/home/wzf/Competitions/asc24/mystery/libarpack.a
+ARPACK=/data/wzf/mis/libarpack.a
 
 # blas and lapack libraries
 # static linking
@@ -42,7 +42,7 @@ cu_mat_mul.o : cumat_mul.c cuda_set_device.o
 	mpiicx -c cumat_mul.c -o cu_mat_mul.o -I/usr/local/cuda/include -I/opt/intel/oneapi/mpi/latest/include 
 
 cuda_set_device.o : cuda_set_device.cu
-	nvcc -c cuda_set_device.cu -o cuda_set_device.o -I/opt/intel/oneapi/mpi/latest/include
+	nvcc -O3 -gencode=arch=compute_80,code=sm_80 -c cuda_set_device.cu -o cuda_set_device.o -I/opt/intel/oneapi/mpi/latest/include
 
 .SUFFIXES: .o .f90
 
