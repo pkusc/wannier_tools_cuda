@@ -10,7 +10,9 @@ extern "C" void cuda_my_memset(void* ptr, int value, size_t count);
 
 void cuda_set_device(){
     int rank;
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm shmcomm;
+    MPI_Comm_split_type(MPI_COMM_WORLD, MPI_COMM_TYPE_SHARED, 0,MPI_INFO_NULL, &shmcomm);
+    MPI_Comm_rank(shmcomm, &rank);
 
     cudaSetDevice(rank/32);
     cudaDeviceProp prop;
